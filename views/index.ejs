@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet' href='/assets/materialize/css/materialize.min.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+    <header>
+        <% include ./partials/header %>
+    </header>
+
+    <main>
+      <h1><%= title %></h1>
+      <p>Welcome to <%= title %></p>
+    </main>
+
+  </body>
+
+  <script
+          src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+  <script type='text/javascript' src='/assets/materialize/js/materialize.min.js'></script>
+  <script type="text/javascript" src="/javascripts/script.js"></script>
+
+</html>

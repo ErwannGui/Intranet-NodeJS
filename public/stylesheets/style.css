@@ -1,0 +1,17 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+main {
+  padding: 50px; }
+
+a {
+  color: #00B7FF; }
+  a.brand-logo {
+    width: 20%;
+    height: 100%;
+    padding: 10px 30px; }
+    a.brand-logo img {
+      width: auto;
+      height: 100%; }
+
+/*# sourceMappingURL=style.css.map */
