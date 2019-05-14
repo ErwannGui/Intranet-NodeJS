@@ -82,3 +82,6 @@ $RECYCLE.BIN/
 
 # InteliJ Idea files
 .idea/
+
+# Custom Libs
+public/assets/charts/apexcharts/

@@ -2,9 +2,14 @@
 <html>
   <head>
     <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel='stylesheet' href='/assets/materialize/css/materialize.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!--<link rel="stylesheet" href="/assets/charts/apexcharts/custom/style.css">-->
   </head>
   <body>
 
@@ -15,14 +20,65 @@
     <main>
       <ul class="tabs">
         <li class="tab col s3"><a class="active" href="#charts">Graphiques</a></li>
-        <li class="tab col s3"><a href="#list">Liste de données</a></li>
+        <li class="tab col s3 disabled"><a href="#list">Liste de données</a></li>
       </ul>
       <div id="charts" class="col s12">
+        <ul class="collapsible popout expandable">
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 1</div>
+            <div class="collapsible-body">
+              <!--<canvas id="temp_cuve"></canvas>
+              <button id="randomizeData" class="btn"><i class="material-icons left">refresh</i>Randomize Data</button>-->
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 2</div>
+            <div class="collapsible-body">
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 3</div>
+            <div class="collapsible-body">
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 4</div>
+            <div class="collapsible-body">
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 5</div>
+            <div class="collapsible-body">
+            </div>
+          </li>
+        </ul>
       </div>
-      <div id="list" class="col s12">
-        <h1><%= title %></h1>
-        <p>Welcome to <%= title %></p>
-      </div>
+      <!--<div id="list" class="col s12">
+        <ul class="collapsible popout expandable">
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 1</div>
+            <div class="collapsible-body">
+
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 2</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 3</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 4</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 5</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+          </li>
+        </ul>
+      </div>-->
     </main>
 
   </body>
@@ -32,6 +88,104 @@
           integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
           crossorigin="anonymous"></script>
   <script type='text/javascript' src='/assets/materialize/js/materialize.min.js'></script>
+  <!--<script type="text/javascript" src="/assets/charts/Chart.min.js"></script>
+  <script type="text/javascript" src="/assets/charts/utils.js"></script>-->
+
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
+  <script src="/assets/charts/apexcharts/custom/scripts.js"></script>-->
   <script type="text/javascript" src="/javascripts/script.js"></script>
+  <!--<script>
+      var lineChartData = {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [{
+              label: 'Automate 1',
+              borderColor: window.chartColors.red,
+              backgroundColor: window.chartColors.red,
+              fill: false,
+              data: [
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor()
+              ],
+              yAxisID: 'y-axis-1',
+          }, {
+              label: 'Automate 2',
+              borderColor: window.chartColors.blue,
+              backgroundColor: window.chartColors.blue,
+              fill: false,
+              data: [
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor()
+              ],
+              yAxisID: 'y-axis-2'
+          }, {
+              label: 'Automate 3',
+              borderColor: window.chartColors.green,
+              backgroundColor: window.chartColors.green,
+              fill: false,
+              data: [
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor()
+              ],
+              yAxisID: 'y-axis-1'
+          }]
+      };
+      window.onload = function() {
+          var ctx = document.getElementById('temp_cuve').getContext('2d');
+          //var ctx = $('#temp_cuve');
+          window.myLine = Chart.Line(ctx, {
+              data: lineChartData,
+              options: {
+                  responsive: true,
+                  hoverMode: 'index',
+                  stacked: false,
+                  title: {
+                      display: true,
+                      text: 'Température de la cuve'
+                  },
+                  scales: {
+                      yAxes: [{
+                          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                          display: true,
+                          position: 'left',
+                          id: 'y-axis-1',
+                      }, {
+                          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                          display: true,
+                          position: 'right',
+                          id: 'y-axis-2',
+                          // grid line settings
+                          gridLines: {
+                              drawOnChartArea: false, // only want the grid lines for one axis to show up
+                          },
+                      }],
+                  }
+              }
+          });
+      };
+      document.getElementById('randomizeData').addEventListener('click', function() {
+          lineChartData.datasets.forEach(function(dataset) {
+              dataset.data = dataset.data.map(function() {
+                  return randomScalingFactor();
+              });
+          });
+          window.myLine.update();
+      });
+  </script>-->
 
 </html>
