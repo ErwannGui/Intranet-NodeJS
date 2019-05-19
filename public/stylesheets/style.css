@@ -17,8 +17,13 @@ a {
 .collapsible-body {
   padding: 0;
   height: auto; }
+  .collapsible-body.dynamic-data-container {
+    background: #1B213B;
+    color: #fff; }
   .collapsible-body iframe {
     width: 100%; }
+  .collapsible-body h2 {
+    font-size: 2rem; }
 
 canvas {
   width: 100%;

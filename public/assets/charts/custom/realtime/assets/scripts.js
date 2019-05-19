@@ -602,3 +602,9 @@ window.setInterval(function () {
 
 
 }, 3000)
+
+document.getElementById('print_page').addEventListener('click', function (ev) {
+  ev.preventDefault();
+  document.getElementById('print_page').style.display = "none";
+  window.print();
+});

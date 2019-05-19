@@ -1,15 +1,47 @@
 var express = require('express');
 var router = express.Router();
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'node-intranet'
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    /*if (req.session.loggedin) {
-        res.render('index', { title: 'Tableau de bord', username: req.session.username });
+    if (req.session.loggedin) {
+        connection.query('SELECT * FROM mesures WHERE num_unite = ?', 1, function(error, results, fields) {
+            if (error) {
+                console.log(error.message);
+                res.render('index', { title: 'Tableau de bord', username: req.session.username });
+            } else {
+                var mesures_data = JSON.stringify(results);
+                res.render('index', { title: 'Tableau de bord', username: req.session.username, data: mesures_data });
+            }
+        });
     } else {
+        res.redirect('/login');
+    }
+    // res.end();
+    // res.render('index', { title: 'Tableau de bord', username: 'Anonymous' });
+});
+
+router.get('/login', function (req, res, next) {
+    if (!req.session.loggedin) {
         res.render('login');
     }
-    res.end();*/
-    res.render('index', { title: 'Tableau de bord', username: 'Anonymous' });
+});
+
+router.get('/load-data/:automate', function (req, res) {
+    connection.query('SELECT * FROM mesures WHERE unit = ? AND num_automate = ? limit 5', [1, req.params.automate], function(error, results) {
+        if (results.length > 0) {
+            var mesures_data = JSON.stringify(results);
+            res.status(200).send(mesures_data);
+        } else {
+            console.log('No data provided');
+        }
+    });
 });
 
 module.exports = router;

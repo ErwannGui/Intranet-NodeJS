@@ -20,15 +20,55 @@
     <main>
       <ul class="tabs">
         <li class="tab col s3"><a class="active" href="#charts">Graphiques</a></li>
-        <li class="tab col s3 disabled"><a href="#list">Liste de données</a></li>
+        <li class="tab col s3"><a href="#list">Liste de données</a></li>
       </ul>
       <div id="charts" class="col s12">
         <ul class="collapsible popout expandable">
           <li>
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 1</div>
-            <div class="collapsible-body">
-              <!--<canvas id="temp_cuve"></canvas>
-              <button id="randomizeData" class="btn"><i class="material-icons left">refresh</i>Randomize Data</button>-->
+            <div class="collapsible-body row dynamic-data-container">
+              <div class="col s10 offset-s1 l8 offset-l2 row">
+                <div class="s12">
+                  <h2>Température Int</h2>
+                  <div id="linechart-temp-int"> </div>
+                </div>
+                <div class="s12">
+                  <h2>Température Ext</h2>
+                  <div id="linechart-temp-ext"> </div>
+                </div>
+                <div class="s12">
+                  <h2>Poids lait</h2>
+                  <div id="linechart-weight-milk"> </div>
+                </div>
+                <div class="s12">
+                  <h2>Poids produit fini</h2>
+                  <div id="linechart-weight-product"> </div>
+                </div>
+                <!--<div class="s12">
+                  <h2>PH</h2>
+                  <div id="linechart-ph"> </div>
+                </div>
+                <div class="s12">
+                  <h2>Taux K+</h2>
+                  <div id="linechart-potassium"> </div>
+                </div>
+                <div class="s12">
+                  <h2>Concentration NaCl</h2>
+                  <div id="linechart-nacl"> </div>
+                </div>
+                <div class="s12">
+                  <h2>Niveau de salmonelle</h2>
+                  <div id="linechart-salmonelle"> </div>
+                </div>
+                <div class="s12">
+                  <h2>Niveau de bactérie E-coli</h2>
+                  <div id="linechart-ecoli"> </div>
+                </div>
+                <div class="s12">
+                  <h2>Niveau de bactérie Listéria</h2>
+                  <div id="linechart-listeria"> </div>
+                </div>-->
+              </div>
             </div>
           </li>
           <li>
@@ -53,12 +93,50 @@
           </li>
         </ul>
       </div>
-      <!--<div id="list" class="col s12">
+      <div id="list" class="col s12">
         <ul class="collapsible popout expandable">
           <li>
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 1</div>
             <div class="collapsible-body">
 
+              <table class="highlight">
+                <thead>
+                  <tr>
+                    <th>Numéro d'automate</th>
+                    <th>Type d'automate</th>
+                    <th>Température int</th>
+                    <th>Température ext</th>
+                    <th>Poids lait</th>
+                    <th>Poids produit</th>
+                    <th>PH</th>
+                    <th>Taux K+</th>
+                    <th>Concentration NaCl</th>
+                    <th>Niveau salmonelle</th>
+                    <th>Niveau E-coli</th>
+                    <th>Niveau Listéria</th>
+                    <th>TimeStamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var i=0; i < JSON.parse(data).length; i++) { %>
+                    <tr>
+                      <td><%= JSON.parse(data)[i].num_automate %></td>
+                      <td><%= JSON.parse(data)[i].type_automate %></td>
+                      <td><%= JSON.parse(data)[i].temp_int %></td>
+                      <td><%= JSON.parse(data)[i].temp_ext %></td>
+                      <td><%= JSON.parse(data)[i].weight_milk %></td>
+                      <td><%= JSON.parse(data)[i].weight_product %></td>
+                      <td><%= JSON.parse(data)[i].ph %></td>
+                      <td><%= JSON.parse(data)[i].potassium %></td>
+                      <td><%= JSON.parse(data)[i].nacl %></td>
+                      <td><%= JSON.parse(data)[i].salmonelle %></td>
+                      <td><%= JSON.parse(data)[i].e_coli %></td>
+                      <td><%= JSON.parse(data)[i].listeria %></td>
+                      <td><%= JSON.parse(data)[i].time %></td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
             </div>
           </li>
           <li>
@@ -78,7 +156,7 @@
             <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
           </li>
         </ul>
-      </div>-->
+      </div>
     </main>
 
   </body>
@@ -91,101 +169,342 @@
   <!--<script type="text/javascript" src="/assets/charts/Chart.min.js"></script>
   <script type="text/javascript" src="/assets/charts/utils.js"></script>-->
 
-  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
-  <script src="/assets/charts/apexcharts/custom/scripts.js"></script>-->
   <script type="text/javascript" src="/javascripts/script.js"></script>
-  <!--<script>
-      var lineChartData = {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-              label: 'Automate 1',
-              borderColor: window.chartColors.red,
-              backgroundColor: window.chartColors.red,
-              fill: false,
-              data: [
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor()
-              ],
-              yAxisID: 'y-axis-1',
-          }, {
-              label: 'Automate 2',
-              borderColor: window.chartColors.blue,
-              backgroundColor: window.chartColors.blue,
-              fill: false,
-              data: [
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor()
-              ],
-              yAxisID: 'y-axis-2'
-          }, {
-              label: 'Automate 3',
-              borderColor: window.chartColors.green,
-              backgroundColor: window.chartColors.green,
-              fill: false,
-              data: [
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor(),
-                  randomScalingFactor()
-              ],
-              yAxisID: 'y-axis-1'
-          }]
-      };
-      window.onload = function() {
-          var ctx = document.getElementById('temp_cuve').getContext('2d');
-          //var ctx = $('#temp_cuve');
-          window.myLine = Chart.Line(ctx, {
-              data: lineChartData,
-              options: {
-                  responsive: true,
-                  hoverMode: 'index',
-                  stacked: false,
-                  title: {
-                      display: true,
-                      text: 'Température de la cuve'
-                  },
-                  scales: {
-                      yAxes: [{
-                          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                          display: true,
-                          position: 'left',
-                          id: 'y-axis-1',
-                      }, {
-                          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                          display: true,
-                          position: 'right',
-                          id: 'y-axis-2',
-                          // grid line settings
-                          gridLines: {
-                              drawOnChartArea: false, // only want the grid lines for one axis to show up
-                          },
-                      }],
-                  }
-              }
-          });
-      };
-      document.getElementById('randomizeData').addEventListener('click', function() {
-          lineChartData.datasets.forEach(function(dataset) {
-              dataset.data = dataset.data.map(function() {
-                  return randomScalingFactor();
-              });
-          });
-          window.myLine.update();
-      });
-  </script>-->
+  <script type="text/javascript">
+
+
+    /* ----- APEXCHARTS ----- */
+
+    window.Apex = {
+      chart: {
+        foreColor: '#fff',
+        toolbar: {
+          show: false
+        },
+      },
+      colors: ['#FCCF31', '#17ead9', '#f02fc2', '#00c853', '#b71c1c'],
+      stroke: {
+        width: 3
+      },
+      dataLabels: {
+        enabled: false
+      },
+      grid: {
+        borderColor: "#40475D",
+      },
+      xaxis: {
+        axisTicks: {
+          color: '#333'
+        },
+        axisBorder: {
+          color: "#333"
+        }
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          gradientToColors: ['#F55555', '#6078ea', '#6094ea']
+        },
+      },
+      tooltip: {
+        theme: 'dark',
+        x: {
+          formatter: function (val) {
+            return moment(new Date(val)).format("HH:mm:ss")
+          }
+        }
+      },
+      yaxis: {
+        decimalsInFloat: 1,
+        opposite: true,
+        labels: {
+          offsetX: -10
+        }
+      }
+    };
+
+    var trigoStrength = 3;
+    var iteration = 11;
+
+    function getRandom() {
+      var i = iteration;
+      return (Math.sin(i / trigoStrength) * (i / trigoStrength) + i / trigoStrength + 1) * (trigoStrength * 2)
+    }
+
+    function getNewData(baseval, yrange) {
+      var newTime = baseval + 300000;
+      /*return {
+        x: newTime,
+        y: Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
+      }*/
+      /* ----- En attendant l'appel d'API fonctionnel, les données random sont générées ----- */
+      return (Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min);
+    }
+
+    function generateMinuteWiseTimeSeries(baseval, count, automator) {
+      var i = 0;
+      var series = [];
+      while (i < count) {
+        var x = baseval;
+        var y = 0;
+        <% for(var i=0; i < JSON.parse(data).length; i++) { %>
+          var num_automate = <%- JSON.parse(data)[i].num_automate %>;
+          console.log('Automate '+num_automate);
+          if (num_automate == automator) {
+            y = <%- JSON.parse(data)[i].temp_int %>;
+          }
+        <% } %>
+        // var y = ((Math.sin(i / trigoStrength) * (i / trigoStrength) + i / trigoStrength + 1) * (trigoStrength * 2));
+        console.log(y);
+
+        series.push([x, y]);
+        baseval += 300000;
+        i++;
+      }
+      return series;
+    }
+
+    var optionsLine = {
+      chart: {
+        height: 350,
+        type: 'line',
+        stacked: true,
+        animations: {
+          enabled: true,
+          easing: 'linear',
+          dynamicAnimation: {
+            speed: 1000
+          }
+        },
+        dropShadow: {
+          enabled: true,
+          opacity: 0.3,
+          blur: 5,
+          left: -7,
+          top: 22
+        },
+        events: {
+          animationEnd: function (chartCtx) {
+            const newData1 = chartCtx.w.config.series[0].data.slice()
+            newData1.shift()
+            const newData2 = chartCtx.w.config.series[1].data.slice()
+            newData2.shift()
+            const newData3 = chartCtx.w.config.series[2].data.slice()
+            newData3.shift()
+            const newData4 = chartCtx.w.config.series[3].data.slice()
+            newData4.shift()
+            const newData5 = chartCtx.w.config.series[4].data.slice()
+            newData5.shift()
+            window.setTimeout(function () {
+              chartCtx.updateOptions({
+                series: [{
+                  data: newData1
+                }, {
+                  data: newData2
+                }, {
+                  data: newData3
+                }, {
+                  data: newData4
+                }, {
+                  data: newData5
+                }],
+                subtitle: {
+                  text: parseInt(getRandom() * Math.random()).toString(),
+                }
+              }, false, false)
+            }, 300)
+          }
+        },
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight',
+        width: 5,
+      },
+      grid: {
+        padding: {
+          left: 0,
+          right: 0
+        }
+      },
+      markers: {
+        size: 0,
+        hover: {
+          size: 0
+        }
+      },
+      series: [
+        {
+          name: 'Automate 1',
+          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 1)
+        }, {
+          name: 'Automate 2',
+          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 2)
+        }, {
+          name: 'Automate 3',
+          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 3)
+        }, {
+          name: 'Automate 4',
+          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 4)
+        }, {
+          name: 'Automate 5',
+          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 5)
+        }],
+      xaxis: {
+        type: 'datetime',
+        range: 2700000
+      },
+      title: {
+        text: 'Processes',
+        align: 'left',
+        style: {
+          fontSize: '12px'
+        }
+      },
+      subtitle: {
+        text: '20',
+        floating: true,
+        align: 'right',
+        offsetY: 0,
+        style: {
+          fontSize: '22px'
+        }
+      },
+      legend: {
+        show: true,
+        floating: true,
+        horizontalAlign: 'left',
+        onItemClick: {
+          toggleDataSeries: false
+        },
+        position: 'top',
+        offsetY: -33,
+        offsetX: 60
+      }
+    };
+
+    var chartLine_temp_int = new ApexCharts(
+      document.querySelector("#linechart-temp-int"),
+      optionsLine
+    );
+    chartLine_temp_int.render();
+
+    var chartLine_temp_ext = new ApexCharts(
+      document.querySelector("#linechart-temp-ext"),
+      optionsLine
+    );
+    chartLine_temp_ext.render();
+
+    var weight_milk = new ApexCharts(
+      document.querySelector("#linechart-weight-milk"),
+      optionsLine
+    );
+    weight_milk.render();
+
+    var weight_product = new ApexCharts(
+      document.querySelector("#linechart-weight-product"),
+      optionsLine
+    );
+    weight_product.render();
+
+    window.setInterval(function () {
+
+      iteration++;
+      // var new_data = getNewData();
+
+      chartLine_temp_int.updateSeries([{
+        data: [...chartLine_temp_int.w.config.series[0].data,
+          [
+            chartLine_temp_int.w.globals.maxX + 300000,
+            getNewData(new Date().getTime(), {min: 2, max: 5})
+          ]
+        ]
+      },
+      {
+        data: [...chartLine_temp_int.w.config.series[1].data,
+          [
+            chartLine_temp_int.w.globals.maxX + 300000,
+            getNewData(new Date().getTime(), {min: 2, max: 5})
+          ]
+        ]
+      },
+      {
+        data: [...chartLine_temp_int.w.config.series[2].data,
+          [
+            chartLine_temp_int.w.globals.maxX + 300000,
+            getNewData(new Date().getTime(), {min: 2, max: 5})
+          ]
+        ]
+      },
+      {
+        data: [...chartLine_temp_int.w.config.series[3].data,
+          [
+            chartLine_temp_int.w.globals.maxX + 300000,
+            getNewData(new Date().getTime(), {min: 2, max: 5})
+          ]
+        ]
+      },
+      {
+        data: [...chartLine_temp_int.w.config.series[4].data,
+          [
+            chartLine_temp_int.w.globals.maxX + 300000,
+            getNewData(new Date().getTime(), {min: 2, max: 5})
+          ]
+        ]
+      }])
+
+        chartLine_temp_ext.updateSeries([{
+            data: [...chartLine_temp_ext.w.config.series[0].data,
+                [
+                    chartLine_temp_ext.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 8, max: 14})
+                ]
+            ]
+        },
+        {
+            data: [...chartLine_temp_ext.w.config.series[1].data,
+                [
+                    chartLine_temp_ext.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 8, max: 14})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_temp_ext.w.config.series[2].data,
+                [
+                    chartLine_temp_ext.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 8, max: 14})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_temp_ext.w.config.series[3].data,
+                [
+                    chartLine_temp_ext.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 8, max: 14})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_temp_ext.w.config.series[4].data,
+                [
+                    chartLine_temp_ext.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 8, max: 14})
+                ]
+        ]
+        }])
+
+    }, 3000)
+  </script>
 
 </html>
