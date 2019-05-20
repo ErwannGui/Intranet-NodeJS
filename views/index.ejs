@@ -81,7 +81,7 @@
             <div class="collapsible-body">
             </div>
           </li>
-          <li>
+          <!--<li>
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 4</div>
             <div class="collapsible-body">
             </div>
@@ -90,16 +90,21 @@
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 5</div>
             <div class="collapsible-body">
             </div>
-          </li>
+          </li>-->
         </ul>
       </div>
       <div id="list" class="col s12">
         <ul class="collapsible popout expandable">
           <li>
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 1</div>
-            <div class="collapsible-body">
-
-              <table class="highlight">
+            <div class="collapsible-body material-table">
+              <div class="table-header">
+                <span class="table-title">Datatable unité 1</span>
+                <div class="actions">
+                  <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+                </div>
+              </div>
+              <table class="highlight responsive-table datatable">
                 <thead>
                   <tr>
                     <th>Numéro d'automate</th>
@@ -119,9 +124,10 @@
                 </thead>
                 <tbody>
                   <% for(var i=0; i < JSON.parse(data).length; i++) { %>
+                  <% if(JSON.parse(data)[i].num_unite == 1) { %>
                     <tr>
                       <td><%= JSON.parse(data)[i].num_automate %></td>
-                      <td><%= JSON.parse(data)[i].type_automate %></td>
+                      <td style="text-transform: uppercase"><%= parseInt(JSON.parse(data)[i].type_automate).toString(16) %></td>
                       <td><%= JSON.parse(data)[i].temp_int %></td>
                       <td><%= JSON.parse(data)[i].temp_ext %></td>
                       <td><%= JSON.parse(data)[i].weight_milk %></td>
@@ -135,26 +141,121 @@
                       <td><%= JSON.parse(data)[i].time %></td>
                     </tr>
                   <% } %>
+                  <% } %>
                 </tbody>
               </table>
             </div>
           </li>
           <li>
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 2</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-body material-table">
+              <div class="table-header">
+                <span class="table-title">Datatable unité 2</span>
+                <div class="actions">
+                  <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+                </div>
+              </div>
+              <table class="highlight responsive-table datatable">
+                <thead>
+                <tr>
+                  <th>Numéro d'automate</th>
+                  <th>Type d'automate</th>
+                  <th>Température int</th>
+                  <th>Température ext</th>
+                  <th>Poids lait</th>
+                  <th>Poids produit</th>
+                  <th>PH</th>
+                  <th>Taux K+</th>
+                  <th>Concentration NaCl</th>
+                  <th>Niveau salmonelle</th>
+                  <th>Niveau E-coli</th>
+                  <th>Niveau Listéria</th>
+                  <th>TimeStamp</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i < JSON.parse(data).length; i++) { %>
+                <% if(JSON.parse(data)[i].num_unite == 2) { %>
+                <tr>
+                  <td><%= JSON.parse(data)[i].num_automate %></td>
+                  <td style="text-transform: uppercase"><%= parseInt(JSON.parse(data)[i].type_automate).toString(16) %></td>
+                  <td><%= JSON.parse(data)[i].temp_int %></td>
+                  <td><%= JSON.parse(data)[i].temp_ext %></td>
+                  <td><%= JSON.parse(data)[i].weight_milk %></td>
+                  <td><%= JSON.parse(data)[i].weight_product %></td>
+                  <td><%= JSON.parse(data)[i].ph %></td>
+                  <td><%= JSON.parse(data)[i].potassium %></td>
+                  <td><%= JSON.parse(data)[i].nacl %></td>
+                  <td><%= JSON.parse(data)[i].salmonelle %></td>
+                  <td><%= JSON.parse(data)[i].e_coli %></td>
+                  <td><%= JSON.parse(data)[i].listeria %></td>
+                  <td><%= JSON.parse(data)[i].time %></td>
+                </tr>
+                <% } %>
+                <% } %>
+                </tbody>
+              </table>
+            </div>
           </li>
           <li>
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 3</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-body material-table">
+              <div class="table-header">
+                <span class="table-title">Datatable unité 3</span>
+                <div class="actions">
+                  <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+                </div>
+              </div>
+              <table class="highlight responsive-table datatable">
+                <thead>
+                <tr>
+                  <th>Numéro d'automate</th>
+                  <th>Type d'automate</th>
+                  <th>Température int</th>
+                  <th>Température ext</th>
+                  <th>Poids lait</th>
+                  <th>Poids produit</th>
+                  <th>PH</th>
+                  <th>Taux K+</th>
+                  <th>Concentration NaCl</th>
+                  <th>Niveau salmonelle</th>
+                  <th>Niveau E-coli</th>
+                  <th>Niveau Listéria</th>
+                  <th>TimeStamp</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i < JSON.parse(data).length; i++) { %>
+                <% if(JSON.parse(data)[i].num_unite == 3) { %>
+                <tr>
+                  <td><%= JSON.parse(data)[i].num_automate %></td>
+                  <td style="text-transform: uppercase"><%= parseInt(JSON.parse(data)[i].type_automate).toString(16) %></td>
+                  <td><%= JSON.parse(data)[i].temp_int %></td>
+                  <td><%= JSON.parse(data)[i].temp_ext %></td>
+                  <td><%= JSON.parse(data)[i].weight_milk %></td>
+                  <td><%= JSON.parse(data)[i].weight_product %></td>
+                  <td><%= JSON.parse(data)[i].ph %></td>
+                  <td><%= JSON.parse(data)[i].potassium %></td>
+                  <td><%= JSON.parse(data)[i].nacl %></td>
+                  <td><%= JSON.parse(data)[i].salmonelle %></td>
+                  <td><%= JSON.parse(data)[i].e_coli %></td>
+                  <td><%= JSON.parse(data)[i].listeria %></td>
+                  <td><%= JSON.parse(data)[i].time %></td>
+                </tr>
+                <% } %>
+                <% } %>
+                </tbody>
+              </table>
+            </div>
           </li>
-          <li>
+          <!--<li>
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 4</div>
             <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
           </li>
           <li>
             <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>Unité 5</div>
             <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-          </li>
+          </li>-->
         </ul>
       </div>
     </main>
@@ -166,13 +267,37 @@
           integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
           crossorigin="anonymous"></script>
   <script type='text/javascript' src='/assets/materialize/js/materialize.min.js'></script>
-  <!--<script type="text/javascript" src="/assets/charts/Chart.min.js"></script>
-  <script type="text/javascript" src="/assets/charts/utils.js"></script>-->
 
+  <!-- APEXCHARTS LIBS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
+
+  <!-- DATATABLE LIBS -->
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
   <script type="text/javascript" src="/javascripts/script.js"></script>
   <script type="text/javascript">
+
+      /*var data_unit_1_temp_int = [];
+      var data_unit_1_temp_ext = [];
+      var data_unit_1_weight_milk = [];
+      var data_unit_1_weight_product = [];
+      var data_unit_2 = [];
+      <% // for(var i=0; i < JSON.parse(data).length; i++) { %>
+        var num_unit= <%- // JSON.parse(data)[i].num_unite %>;
+        if (num_unit === 1) {
+            data_unit_1_temp_int.push(<%- // JSON.parse(data)[i].temp_int %>);
+            data_unit_1_temp_ext.push(<%- // JSON.parse(data)[i].temp_ext %>);
+            data_unit_1_weight_milk.push(<%- // JSON.parse(data)[i].weight_milk %>);
+            data_unit_1_weight_product.push(<%- // JSON.parse(data)[i].weight_product %>);
+        } else if (num_unit === 2) {
+            data_unit_2.push(<%- // JSON.parse(data)[i] %>);
+        }
+      <% // } %>*/
 
 
     /* ----- APEXCHARTS ----- */
@@ -181,7 +306,7 @@
       chart: {
         foreColor: '#fff',
         toolbar: {
-          show: false
+          show: true
         },
       },
       colors: ['#FCCF31', '#17ead9', '#f02fc2', '#00c853', '#b71c1c'],
@@ -248,15 +373,8 @@
       var series = [];
       while (i < count) {
         var x = baseval;
-        var y = 0;
-        <% for(var i=0; i < JSON.parse(data).length; i++) { %>
-          var num_automate = <%- JSON.parse(data)[i].num_automate %>;
-          console.log('Automate '+num_automate);
-          if (num_automate == automator) {
-            y = <%- JSON.parse(data)[i].temp_int %>;
-          }
-        <% } %>
-        // var y = ((Math.sin(i / trigoStrength) * (i / trigoStrength) + i / trigoStrength + 1) * (trigoStrength * 2));
+        // var y = 0;
+        var y = ((Math.sin(i / trigoStrength) * (i / trigoStrength) + i / trigoStrength + 1) * (trigoStrength * 2)) / 10;
         console.log(y);
 
         series.push([x, y]);
@@ -318,7 +436,7 @@
           }
         },
         toolbar: {
-          show: false
+          show: true
         },
         zoom: {
           enabled: false
@@ -340,7 +458,7 @@
       markers: {
         size: 0,
         hover: {
-          size: 0
+          size: 2
         }
       },
       series: [
@@ -405,17 +523,17 @@
     );
     chartLine_temp_ext.render();
 
-    var weight_milk = new ApexCharts(
+    var chartLine_weight_milk = new ApexCharts(
       document.querySelector("#linechart-weight-milk"),
       optionsLine
     );
-    weight_milk.render();
+    chartLine_weight_milk.render();
 
-    var weight_product = new ApexCharts(
+    var chartLine_weight_product = new ApexCharts(
       document.querySelector("#linechart-weight-product"),
       optionsLine
     );
-    weight_product.render();
+    chartLine_weight_product.render();
 
     window.setInterval(function () {
 
@@ -504,7 +622,89 @@
         ]
         }])
 
-    }, 3000)
+        chartLine_weight_milk.updateSeries([{
+            data: [...chartLine_weight_milk.w.config.series[0].data,
+            [
+            chartLine_weight_milk.w.globals.maxX + 300000,
+            getNewData(new Date().getTime(), {min: 3512, max: 4607})
+    ]
+    ]
+    },
+        {
+            data: [...chartLine_weight_milk.w.config.series[1].data,
+                [
+                    chartLine_weight_milk.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 3512, max: 4607})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_weight_milk.w.config.series[2].data,
+                [
+                    chartLine_weight_milk.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 3512, max: 4607})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_weight_milk.w.config.series[3].data,
+                [
+                    chartLine_weight_milk.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 3512, max: 4607})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_weight_milk.w.config.series[4].data,
+                [
+                    chartLine_weight_milk.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 3512, max: 4607})
+                ]
+        ]
+        }])
+
+        chartLine_weight_product.updateSeries([{
+            data: [...chartLine_weight_product.w.config.series[0].data,
+            [
+            chartLine_weight_product.w.globals.maxX + 300000,
+            getNewData(new Date().getTime(), {min: 0, max: 1095})
+    ]
+    ]
+    },
+        {
+            data: [...chartLine_weight_product.w.config.series[1].data,
+                [
+                    chartLine_weight_product.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 0, max: 1095})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_weight_product.w.config.series[2].data,
+                [
+                    chartLine_weight_product.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 0, max: 1095})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_weight_product.w.config.series[3].data,
+                [
+                    chartLine_weight_product.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 0, max: 1095})
+                ]
+        ]
+        },
+        {
+            data: [...chartLine_weight_product.w.config.series[4].data,
+                [
+                    chartLine_weight_product.w.globals.maxX + 300000,
+                    getNewData(new Date().getTime(), {min: 0, max: 1095})
+                ]
+        ]
+        }])
+
+    }, 10000)
   </script>
 
 </html>

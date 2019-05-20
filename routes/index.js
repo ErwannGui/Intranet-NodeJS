@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if (req.session.loggedin) {
-        connection.query('SELECT * FROM mesures WHERE num_unite = ?', 1, function(error, results, fields) {
+        connection.query('SELECT * FROM mesures', function(error, results, fields) {
             if (error) {
                 console.log(error.message);
                 res.render('index', { title: 'Tableau de bord', username: req.session.username });
@@ -35,11 +35,11 @@ router.get('/login', function (req, res, next) {
 
 router.get('/load-data/:automate', function (req, res) {
     connection.query('SELECT * FROM mesures WHERE unit = ? AND num_automate = ? limit 5', [1, req.params.automate], function(error, results) {
-        if (results.length > 0) {
+        if (error) {
+            res.status(404).send(error.message);
+        } else {
             var mesures_data = JSON.stringify(results);
             res.status(200).send(mesures_data);
-        } else {
-            console.log('No data provided');
         }
     });
 });

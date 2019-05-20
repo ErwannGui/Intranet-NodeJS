@@ -26,8 +26,6 @@ router.post('/insert', function(req, res) {
         });
     }
     res.end();
-
-    connection.end();
 });
 
 module.exports = router;
