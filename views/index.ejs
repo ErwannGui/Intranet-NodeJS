@@ -44,6 +44,12 @@
                   <h2>Poids produit fini</h2>
                   <div id="linechart-weight-product"> </div>
                 </div>
+
+                <div class="s12">
+                  <h2>Taux bactérien</h2>
+                  <div id="columnchart-bact"> </div>
+                </div>
+
                 <!--<div class="s12">
                   <h2>PH</h2>
                   <div id="linechart-ph"> </div>
@@ -282,24 +288,6 @@
   <script type="text/javascript" src="/javascripts/script.js"></script>
   <script type="text/javascript">
 
-      /*var data_unit_1_temp_int = [];
-      var data_unit_1_temp_ext = [];
-      var data_unit_1_weight_milk = [];
-      var data_unit_1_weight_product = [];
-      var data_unit_2 = [];
-      <% // for(var i=0; i < JSON.parse(data).length; i++) { %>
-        var num_unit= <%- // JSON.parse(data)[i].num_unite %>;
-        if (num_unit === 1) {
-            data_unit_1_temp_int.push(<%- // JSON.parse(data)[i].temp_int %>);
-            data_unit_1_temp_ext.push(<%- // JSON.parse(data)[i].temp_ext %>);
-            data_unit_1_weight_milk.push(<%- // JSON.parse(data)[i].weight_milk %>);
-            data_unit_1_weight_product.push(<%- // JSON.parse(data)[i].weight_product %>);
-        } else if (num_unit === 2) {
-            data_unit_2.push(<%- // JSON.parse(data)[i] %>);
-        }
-      <% // } %>*/
-
-
     /* ----- APEXCHARTS ----- */
 
     window.Apex = {
@@ -352,10 +340,16 @@
 
     var trigoStrength = 3;
     var iteration = 11;
+    var optionsLine = {};
+    var optionsColumn = {};
 
     function getRandom() {
       var i = iteration;
       return (Math.sin(i / trigoStrength) * (i / trigoStrength) + i / trigoStrength + 1) * (trigoStrength * 2)
+    }
+
+    function getRangeRandom(yrange) {
+        return Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
     }
 
     function getNewData(baseval, yrange) {
@@ -384,156 +378,318 @@
       return series;
     }
 
-    var optionsLine = {
-      chart: {
-        height: 350,
-        type: 'line',
-        stacked: true,
-        animations: {
-          enabled: true,
-          easing: 'linear',
-          dynamicAnimation: {
-            speed: 1000
-          }
-        },
-        dropShadow: {
-          enabled: true,
-          opacity: 0.3,
-          blur: 5,
-          left: -7,
-          top: 22
-        },
-        events: {
-          animationEnd: function (chartCtx) {
-            const newData1 = chartCtx.w.config.series[0].data.slice()
-            newData1.shift()
-            const newData2 = chartCtx.w.config.series[1].data.slice()
-            newData2.shift()
-            const newData3 = chartCtx.w.config.series[2].data.slice()
-            newData3.shift()
-            const newData4 = chartCtx.w.config.series[3].data.slice()
-            newData4.shift()
-            const newData5 = chartCtx.w.config.series[4].data.slice()
-            newData5.shift()
-            window.setTimeout(function () {
-              chartCtx.updateOptions({
-                series: [{
-                  data: newData1
-                }, {
-                  data: newData2
-                }, {
-                  data: newData3
-                }, {
-                  data: newData4
-                }, {
-                  data: newData5
-                }],
-                subtitle: {
-                  text: parseInt(getRandom() * Math.random()).toString(),
+    function getDataByChart(id, baseval, automate) {
+        var series = [];
+        <% for(var i=0; i < JSON.parse(data).length; i++) { %>
+        var num_unit = <%- JSON.parse(data)[i].num_unite %>;
+        var num_automate = <%- JSON.parse(data)[i].num_automate %>;
+        var x = baseval;
+        if (num_unit == 1 && num_automate === automate) {
+            if(id === "linechart-temp-int") {
+                var y = <%- JSON.parse(data)[i].temp_int %>;
+                series.push([x, y]);
+            }
+            else if(id === "linechart-temp-ext") {
+                var y = <%- JSON.parse(data)[i].temp_ext %>;
+                series.push([x, y]);
+            }
+            else if(id === "linechart-weight-milk") {
+                var y = <%- JSON.parse(data)[i].weight_milk %>;
+                series.push([x, y]);
+            }
+            else if(id === "linechart-weight-product") {
+                var y = <%- JSON.parse(data)[i].weight_product %>;
+                series.push([x, y]);
+            }
+        }
+        baseval += 60000;
+        <% } %>
+        console.log(series.slice(-12));
+        return series.slice(-12);
+    }
+
+    function createLineChart(id) {
+        var time = new Date().getTime();
+        optionsLine = {
+            chart: {
+                height: 350,
+                type: 'line',
+                stacked: true,
+                animations: {
+                    enabled: true,
+                    easing: 'linear',
+                    dynamicAnimation: {
+                        speed: 1000
+                    }
+                },
+                dropShadow: {
+                    enabled: true,
+                    opacity: 0.3,
+                    blur: 5,
+                    left: -7,
+                    top: 22
+                },
+                events: {
+                    animationEnd: function (chartCtx) {
+                        const newData1 = chartCtx.w.config.series[0].data.slice()
+                        newData1.shift()
+                        const newData2 = chartCtx.w.config.series[1].data.slice()
+                        newData2.shift()
+                        /*const newData3 = chartCtx.w.config.series[2].data.slice()
+                        newData3.shift()*/
+                        window.setTimeout(function () {
+                            chartCtx.updateOptions({
+                                series: [{
+                                    data: newData1
+                                }, {
+                                    data: newData2
+                                }/*, {
+                                    data: newData3
+                                }*/],
+                                subtitle: {
+                                    text: parseInt(getRangeRandom({min: 1, max: 100})).toString(),
+                                }
+                            }, false, false)
+                        }, 300)
+                    }
+                },
+                toolbar: {
+                    show: true
+                },
+                zoom: {
+                    enabled: false
                 }
-              }, false, false)
-            }, 300)
-          }
-        },
-        toolbar: {
-          show: true
-        },
-        zoom: {
-          enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'straight',
-        width: 5,
-      },
-      grid: {
-        padding: {
-          left: 0,
-          right: 0
-        }
-      },
-      markers: {
-        size: 0,
-        hover: {
-          size: 2
-        }
-      },
-      series: [
-        {
-          name: 'Automate 1',
-          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 1)
-        }, {
-          name: 'Automate 2',
-          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 2)
-        }, {
-          name: 'Automate 3',
-          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 3)
-        }, {
-          name: 'Automate 4',
-          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 4)
-        }, {
-          name: 'Automate 5',
-          data: generateMinuteWiseTimeSeries(new Date().getTime(), 12, 5)
-        }],
-      xaxis: {
-        type: 'datetime',
-        range: 2700000
-      },
-      title: {
-        text: 'Processes',
-        align: 'left',
-        style: {
-          fontSize: '12px'
-        }
-      },
-      subtitle: {
-        text: '20',
-        floating: true,
-        align: 'right',
-        offsetY: 0,
-        style: {
-          fontSize: '22px'
-        }
-      },
-      legend: {
-        show: true,
-        floating: true,
-        horizontalAlign: 'left',
-        onItemClick: {
-          toggleDataSeries: false
-        },
-        position: 'top',
-        offsetY: -33,
-        offsetX: 60
-      }
-    };
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'straight',
+                width: 5,
+            },
+            grid: {
+                padding: {
+                    left: 0,
+                    right: 0
+                }
+            },
+            markers: {
+                size: 0,
+                hover: {
+                    size: 2
+                }
+            },
+            series: [
+                {
+                    name: 'Automate 1',
+                    data: getDataByChart(id, time, 1)
+                }, {
+                    name: 'Automate 2',
+                    data: getDataByChart(id, time, 2)
+                }/*, {
+                    name: 'Automate 3',
+                    data: getDataByChart(id, new Date().getTime(), 3)
+                }*/],
+            xaxis: {
+                type: 'datetime',
+                range: 540000
+            },
+            title: {
+                text: 'Mesures',
+                align: 'left',
+                style: {
+                    fontSize: '12px'
+                }
+            },
+            subtitle: {
+                text: '20',
+                floating: true,
+                align: 'right',
+                offsetY: 0,
+                style: {
+                    fontSize: '22px'
+                }
+            },
+            legend: {
+                show: true,
+                floating: true,
+                horizontalAlign: 'left',
+                onItemClick: {
+                    toggleDataSeries: false
+                },
+                position: 'top',
+                offsetY: -33,
+                offsetX: 60
+            }
+        };
 
-    var chartLine_temp_int = new ApexCharts(
-      document.querySelector("#linechart-temp-int"),
-      optionsLine
-    );
-    chartLine_temp_int.render();
+        var chartLine = new ApexCharts(
+            document.querySelector("#"+id),
+            optionsLine
+        );
+        chartLine.render();
 
-    var chartLine_temp_ext = new ApexCharts(
-      document.querySelector("#linechart-temp-ext"),
-      optionsLine
-    );
-    chartLine_temp_ext.render();
+        return chartLine;
+    }
 
-    var chartLine_weight_milk = new ApexCharts(
-      document.querySelector("#linechart-weight-milk"),
-      optionsLine
-    );
-    chartLine_weight_milk.render();
+    function getColumnData(baseval, type) {
+        var series = [];
+        <% for(var i=0; i < JSON.parse(data).length; i++) { %>
+        var num_unit = <%- JSON.parse(data)[i].num_unite %>;
+        var num_automate = <%- JSON.parse(data)[i].num_automate %>;
+        var x = baseval;
+        if (num_unit == 1 && num_automate == 1) {
+            if(type === "salmonelle") {
+                var y = <%- JSON.parse(data)[i].salmonelle %>;
+                series.push([x, y]);
+            }
+            else if(type === "ecoli") {
+                var y = <%- JSON.parse(data)[i].e_coli %>;
+                series.push([x, y]);
+            }
+            else if(type === "listeria") {
+                var y = <%- JSON.parse(data)[i].listeria %>;
+                series.push([x, y]);
+            }
+        }
+        baseval += 60000;
+        <% } %>
+        console.log(series.slice(-12));
+        return series.slice(-12);
+    }
 
-    var chartLine_weight_product = new ApexCharts(
-      document.querySelector("#linechart-weight-product"),
-      optionsLine
-    );
-    chartLine_weight_product.render();
+    function createBarChart(id) {
+        optionsColumn = {
+            chart: {
+                height: 350,
+                type: 'bar',
+                animations: {
+                    enabled: true,
+                    easing: 'linear',
+                    dynamicAnimation: {
+                        speed: 1000
+                    }
+                },
+                dropShadow: {
+                  enabled: true,
+                  left: -14,
+                  top: -10,
+                  opacity: 0.05
+                },
+                events: {
+                    animationEnd: function (chartCtx) {
+                        const newData1 = chartCtx.w.config.series[0].data.slice()
+                        newData1.shift();
+                        const newData2 = chartCtx.w.config.series[1].data.slice()
+                        newData2.shift();
+                        /*const newData3 = chartCtx.w.config.series[2].data.slice()
+                        newData3.shift();*/
+                        window.setTimeout(function () {
+                            chartCtx.updateOptions({
+                                series: [{
+                                    data: newData1
+                                }, {
+                                    data: newData2
+                                }/*,{
+                                    data: newData3
+                                }*/],
+                                xaxis: {
+                                    min: chartCtx.minX,
+                                    max: chartCtx.maxX
+                                },
+                                subtitle: {
+                                    text: parseInt(getRangeRandom({min: 1, max: 20})).toString() + '%',
+                                }
+                            }, false, false)
+                        }, 300)
+                    }
+                },
+                toolbar: {
+                    show: false
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 0,
+            },
+            series: [{
+                name: 'Salmonelle',
+                data: getColumnData(new Date().getTime(), "salmonelle")
+            }, {
+                name: 'E-coli',
+                data: getColumnData(new Date().getTime(), "ecoli")
+            }, {
+                name: 'Listéria',
+                data: getColumnData(new Date().getTime(), "listeria")
+            }],
+            title: {
+                text: 'Mesures',
+                align: 'left',
+                style: {
+                    fontSize: '12px'
+                }
+            },
+            subtitle: {
+                text: '20%',
+                floating: true,
+                align: 'right',
+                offsetY: 0,
+                style: {
+                    fontSize: '22px'
+                }
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    type: 'vertical',
+                    shadeIntensity: 0.5,
+                    inverseColors: false,
+                    opacityFrom: 1,
+                    opacityTo: 0.8,
+                    stops: [0, 100]
+                }
+            },
+            xaxis: {
+                type: 'datetime',
+                range: 540000
+            },
+            legend: {
+                show: true,
+                floating: true,
+                horizontalAlign: 'left',
+                onItemClick: {
+                    toggleDataSeries: false
+                },
+                position: 'top',
+                offsetY: -33,
+                offsetX: 60
+            },
+        };
+
+        var chartColumn = new ApexCharts(
+            document.querySelector("#" + id),
+            optionsColumn
+        );
+        chartColumn.render();
+
+        return chartColumn;
+    }
+
+    var chartLine_temp_int = createLineChart("linechart-temp-int");
+
+    var chartLine_temp_ext = createLineChart("linechart-temp-ext");
+
+    var chartLine_weight_milk = createLineChart("linechart-weight-milk");
+
+    var chartLine_weight_product = createLineChart("linechart-weight-product");
+
+    var chartColumn_bact = createBarChart("columnchart-bact");
 
     window.setInterval(function () {
 
@@ -543,7 +699,7 @@
       chartLine_temp_int.updateSeries([{
         data: [...chartLine_temp_int.w.config.series[0].data,
           [
-            chartLine_temp_int.w.globals.maxX + 300000,
+            chartLine_temp_int.w.globals.maxX + 60000,
             getNewData(new Date().getTime(), {min: 2, max: 5})
           ]
         ]
@@ -551,31 +707,7 @@
       {
         data: [...chartLine_temp_int.w.config.series[1].data,
           [
-            chartLine_temp_int.w.globals.maxX + 300000,
-            getNewData(new Date().getTime(), {min: 2, max: 5})
-          ]
-        ]
-      },
-      {
-        data: [...chartLine_temp_int.w.config.series[2].data,
-          [
-            chartLine_temp_int.w.globals.maxX + 300000,
-            getNewData(new Date().getTime(), {min: 2, max: 5})
-          ]
-        ]
-      },
-      {
-        data: [...chartLine_temp_int.w.config.series[3].data,
-          [
-            chartLine_temp_int.w.globals.maxX + 300000,
-            getNewData(new Date().getTime(), {min: 2, max: 5})
-          ]
-        ]
-      },
-      {
-        data: [...chartLine_temp_int.w.config.series[4].data,
-          [
-            chartLine_temp_int.w.globals.maxX + 300000,
+            chartLine_temp_int.w.globals.maxX + 60000,
             getNewData(new Date().getTime(), {min: 2, max: 5})
           ]
         ]
@@ -584,7 +716,7 @@
         chartLine_temp_ext.updateSeries([{
             data: [...chartLine_temp_ext.w.config.series[0].data,
                 [
-                    chartLine_temp_ext.w.globals.maxX + 300000,
+                    chartLine_temp_ext.w.globals.maxX + 60000,
                     getNewData(new Date().getTime(), {min: 8, max: 14})
                 ]
             ]
@@ -592,31 +724,7 @@
         {
             data: [...chartLine_temp_ext.w.config.series[1].data,
                 [
-                    chartLine_temp_ext.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 8, max: 14})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_temp_ext.w.config.series[2].data,
-                [
-                    chartLine_temp_ext.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 8, max: 14})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_temp_ext.w.config.series[3].data,
-                [
-                    chartLine_temp_ext.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 8, max: 14})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_temp_ext.w.config.series[4].data,
-                [
-                    chartLine_temp_ext.w.globals.maxX + 300000,
+                    chartLine_temp_ext.w.globals.maxX + 60000,
                     getNewData(new Date().getTime(), {min: 8, max: 14})
                 ]
         ]
@@ -625,7 +733,7 @@
         chartLine_weight_milk.updateSeries([{
             data: [...chartLine_weight_milk.w.config.series[0].data,
             [
-            chartLine_weight_milk.w.globals.maxX + 300000,
+            chartLine_weight_milk.w.globals.maxX + 60000,
             getNewData(new Date().getTime(), {min: 3512, max: 4607})
     ]
     ]
@@ -633,31 +741,7 @@
         {
             data: [...chartLine_weight_milk.w.config.series[1].data,
                 [
-                    chartLine_weight_milk.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 3512, max: 4607})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_weight_milk.w.config.series[2].data,
-                [
-                    chartLine_weight_milk.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 3512, max: 4607})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_weight_milk.w.config.series[3].data,
-                [
-                    chartLine_weight_milk.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 3512, max: 4607})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_weight_milk.w.config.series[4].data,
-                [
-                    chartLine_weight_milk.w.globals.maxX + 300000,
+                    chartLine_weight_milk.w.globals.maxX + 60000,
                     getNewData(new Date().getTime(), {min: 3512, max: 4607})
                 ]
         ]
@@ -666,7 +750,7 @@
         chartLine_weight_product.updateSeries([{
             data: [...chartLine_weight_product.w.config.series[0].data,
             [
-            chartLine_weight_product.w.globals.maxX + 300000,
+            chartLine_weight_product.w.globals.maxX + 60000,
             getNewData(new Date().getTime(), {min: 0, max: 1095})
     ]
     ]
@@ -674,37 +758,39 @@
         {
             data: [...chartLine_weight_product.w.config.series[1].data,
                 [
-                    chartLine_weight_product.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 0, max: 1095})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_weight_product.w.config.series[2].data,
-                [
-                    chartLine_weight_product.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 0, max: 1095})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_weight_product.w.config.series[3].data,
-                [
-                    chartLine_weight_product.w.globals.maxX + 300000,
-                    getNewData(new Date().getTime(), {min: 0, max: 1095})
-                ]
-        ]
-        },
-        {
-            data: [...chartLine_weight_product.w.config.series[4].data,
-                [
-                    chartLine_weight_product.w.globals.maxX + 300000,
+                    chartLine_weight_product.w.globals.maxX + 60000,
                     getNewData(new Date().getTime(), {min: 0, max: 1095})
                 ]
         ]
         }])
 
-    }, 10000)
+
+        chartColumn_bact.updateSeries([{
+            data: [...chartColumn_bact.w.config.series[0].data,
+            [
+            chartColumn_bact.w.globals.maxX + 60000,
+            getNewData(new Date().getTime(), {min: 17, max: 37})
+            ]
+          ]
+        },
+        {
+            data: [...chartColumn_bact.w.config.series[1].data,
+                [
+                    chartColumn_bact.w.globals.maxX + 60000,
+                    getNewData(new Date().getTime(), {min: 35, max: 49})
+                ]
+        ]
+        },
+        {
+            data: [...chartColumn_bact.w.config.series[2].data,
+                [
+                    chartColumn_bact.w.globals.maxX + 60000,
+                    getNewData(new Date().getTime(), {min: 28, max: 54})
+                ]
+        ]
+        }])
+
+    }, 3000)
   </script>
 
 </html>

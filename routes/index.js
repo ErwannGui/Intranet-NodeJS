@@ -34,7 +34,7 @@ router.get('/login', function (req, res, next) {
 });
 
 router.get('/load-data/:automate', function (req, res) {
-    connection.query('SELECT * FROM mesures WHERE unit = ? AND num_automate = ? limit 5', [1, req.params.automate], function(error, results) {
+    connection.query('SELECT * FROM mesures WHERE unit = ? AND num_automate = ? limit 5', [req.params.unit, req.params.automate], function(error, results) {
         if (error) {
             res.status(404).send(error.message);
         } else {

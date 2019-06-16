@@ -20,11 +20,15 @@ router.post('/insert', function(req, res) {
         connection.query('INSERT INTO mesures VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', mesures, function(error, results, fields) {
             if (error) {
                 console.error(error.message);
+                res.status(404).send(error);
             } else {
                 console.log('Data recorded in database.');
+                res.status(200);
             }
         });
     }
+
+    res.send('Data recorded in database.');
     res.end();
 });
 
