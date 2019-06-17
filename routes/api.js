@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+
 var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'node-intranet'
+    host     : 'sql7.freemysqlhosting.net',
+    user     : 'sql7295809',
+    password : 'AdtgKKl4LR',
+    database : 'sql7295809'
 });
 
 /* API insertion in database */

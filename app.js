@@ -8,11 +8,12 @@ var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 var fs = require('fs');
 var mysql = require('mysql');
+
 var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'node-intranet'
+    host     : 'sql7.freemysqlhosting.net',
+    user     : 'sql7295809',
+    password : 'AdtgKKl4LR',
+    database : 'sql7295809'
 });
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -46,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 io.sockets.on('connection', function (socket) {
     socket.on('file-ready', function (unit) {
-        socket.emit('ready', {unit: unit});
+        socket.emit('ready');
         console.log('Unit ' + unit + ' ready !');
     });
 
@@ -113,5 +114,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+http.listen(5000);
 
 module.exports = app;
