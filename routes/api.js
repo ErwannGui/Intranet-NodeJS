@@ -3,11 +3,21 @@ var router = express.Router();
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-    host     : 'sql7.freemysqlhosting.net',
-    user     : 'sql7295809',
-    password : 'AdtgKKl4LR',
-    database : 'sql7295809'
+    host     : 'www.ghloel.fr',
+    user     : 'erwann',
+    password : 'Guillevic-44',
+    database : 'DevOPS_eG-aW'
 });
+var fs = require('fs');
+var jwt = require('jsonwebtoken');
+// var public_key = fs.readFileSync(__root + 'jwt-key.pub', 'utf8');  // get private key
+// var verifyOptions = {
+//     issuer:  i,
+//     subject:  s,
+//     audience:  a,
+//     expiresIn:  "1h",
+//     algorithm:  ["RS256"]
+// };
 
 /* API insertion in database */
 router.post('/insert', function(req, res) {
@@ -15,22 +25,29 @@ router.post('/insert', function(req, res) {
     var data = req.body.data;
     var jsonContent = JSON.parse(data);
     var jsonData = jsonContent.data;
-    for (var i=0; i<5; i++) {
-        var mesures = [null, jsonData.unit, i+1, jsonData.mesures[i].type_automate, jsonData.mesures[i].temp_int, jsonData.mesures[i].temp_ext, jsonData.mesures[i].weight_milk, jsonData.mesures[i].weight_product, jsonData.mesures[i].ph, jsonData.mesures[i].potassium, jsonData.mesures[i].nacl, jsonData.mesures[i].salmonelle, jsonData.mesures[i].ecoli, jsonData.mesures[i].listeria, jsonData.mesures[i].time, new Date()];
-        console.log(mesures);
-        connection.query('INSERT INTO mesures VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', mesures, function(error, results, fields) {
-            if (error) {
-                console.error(error.message);
-                res.status(404).send(error);
-            } else {
-                console.log('Data recorded in database.');
-                res.status(200);
+    // jwt.verify(jsonData.token, public_key, verifyOptions, function(err, decoded) {
+    //     if (!err) {
+    //         console.log(JSON.stringify(decoded));
+            for (var i=0; i<5; i++) {
+                var mesures = [null, jsonData.unit, i+1, jsonData.mesures[i].type_automate, jsonData.mesures[i].temp_int, jsonData.mesures[i].temp_ext, jsonData.mesures[i].weight_milk, jsonData.mesures[i].weight_product, jsonData.mesures[i].ph, jsonData.mesures[i].potassium, jsonData.mesures[i].nacl, jsonData.mesures[i].salmonelle, jsonData.mesures[i].ecoli, jsonData.mesures[i].listeria, jsonData.mesures[i].time, new Date()];
+                console.log(mesures);
+                connection.query('INSERT INTO mesures VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', mesures, function(error, results, fields) {
+                    if (error) {
+                        console.error(error.message);
+                        res.status(404).send(error);
+                    } else {
+                        console.log('Data recorded in database.');
+                        res.status(200);
+                    }
+                });
             }
-        });
-    }
 
-    res.send('Data recorded in database.');
-    res.end();
+            res.send('Data recorded in database.');
+        // } else {
+        //     console.log(err);
+        // }
+        res.end();
+    // });
 });
 
 module.exports = router;
