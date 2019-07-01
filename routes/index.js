@@ -3,10 +3,10 @@ var router = express.Router();
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-    host     : 'sql7.freemysqlhosting.net',
-    user     : 'sql7295809',
-    password : 'AdtgKKl4LR',
-    database : 'sql7295809'
+    host     : 'www.ghloel.fr',
+    user     : 'erwann',
+    password : 'Guillevic-44',
+    database : 'DevOPS_eG-aW'
 });
 
 /* GET home page. */
